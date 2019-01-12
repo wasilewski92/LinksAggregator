@@ -1,0 +1,35 @@
+﻿@model LinksAggregator.Models.Link
+
+@{
+    ViewData["Title"] = "Szczegóły linku";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>Link</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Address)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Address)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.AddingDate)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.AddingDate)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Index">Wróc do listy linków</a>
+</div>

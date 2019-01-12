@@ -1,0 +1,95 @@
+﻿@*@model IEnumerable<LinksAggregator.Models.Link>*@
+@model LinkViewModel
+
+@{
+    ViewData["Title"] = "Agregator Linków";
+}
+
+
+<br />
+<a class="btn btn-primary" asp-action="Create">Dodaj nowy link</a>
+<br /><br />
+
+<h1>Linki dodane w ciągu ostatnich 5 dni</h1>
+<br />
+
+@{
+    if (Model.Pagination.IsEnabled == false)
+    {
+        <a class="btn btn-primary" asp-action="EnablePagination">Włącz stronicowanie</a>
+        <br /><br />
+    }
+    else
+    {
+        <a class="btn btn-primary" asp-action="DisablePagination">Wyłącz stronicowanie</a>
+        <br /><br />
+
+        <span>Strona @Model.Pagination.Page z @Model.Pagination.PagesAmount</span>
+
+        if (Model.Pagination.Page > 1)
+        {
+            <a class="btn btn-secondary" asp-action="Index" asp-route-page="@Model.Pagination.PreviousPage">Poprzednia Strona</a>
+        }
+        else
+        {
+            <a class="btn btn-secondary disabled">Poprzednia Strona</a>
+        }
+
+        if (Model.Pagination.Page < Model.Pagination.PagesAmount)
+        {
+
+            <a class="btn btn-secondary" asp-action="Index" asp-route-page=@Model.Pagination.NextPage>Następna strona</a>
+        }
+        else
+        {
+            <a class="btn btn-secondary disabled">Następna strona</a>
+        }
+        <br /><br />
+    }
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Tytuł:
+            </th>
+            <th>
+                Data dodania:
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model.Links)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                    <br />
+                    @{
+                        if (item.Address.StartsWith("http://") || item.Address.StartsWith("https://"))
+                        {
+                            <a href="@item.Address">@item.Address</a>
+                        }
+                        else
+                        {
+                            <a href="//@item.Address">@item.Address</a>
+                        }
+                    }
+                </td>
+                <td class="align-middle">
+                    @Html.DisplayFor(modelItem => item.AddingDate)
+                </td>
+
+                @*<td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                        <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                        <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>*@
+            </tr>
+        }
+    </tbody>
+</table>
+
+
